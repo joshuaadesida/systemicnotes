@@ -16,26 +16,31 @@
   <a class="skip" href="#main">Skip to main content</a>
   <header class="masthead">
     <div class="wrap masthead-content">
-      <a class="brand" href="https://joshuaadesida.github.io/systemicnotes/" aria-label="SystemicNotes home by Joshua Adesida"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span> <span class="wordmark">SystemicNotes</span><span class="masthead-author">Joshua Adesida</span></a>
+      <a class="brand" href="https://joshuaadesida.github.io/systemicnotes/" aria-label="SystemicNotes home by Joshua Adesida"><svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 18 6-10 6 5M12 8l-5-4"/><circle cx="6" cy="18" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="18" cy="13" r="2"/><circle cx="7" cy="4" r="2"/></svg> <span class="wordmark">SystemicNotes</span><span class="masthead-author">Joshua Adesida</span></a>
       <nav aria-label="Main navigation">
         <a href="#explore">Explore</a><a href="#evidence">Evidence</a><a href="#brief">Policy brief</a><a href="#methods">Sources</a>
       </nav>
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <section class="hero">
       <div class="wrap hero-content">
         <div>
           <p class="eyebrow">A SystemicNotes project by Joshua Adesida</p>
           <h1>First Nations Infrastructure, Water &amp; Capital Gap Tracker</h1>
           <p class="hero-copy">I wanted to see what public spending changes on the ground. This tracker brings together records on water, winter roads, housing and infrastructure investment across Manitoba First Nations.</p>
+          <nav class="hero-actions" aria-label="Start exploring the tracker">
+            <a class="button primary" href="#explore">Explore the map</a>
+            <a class="hero-link" href="?nation=306&amp;layer=water#community-profile">Start with Tataskweyak</a>
+            <a class="hero-link" href="#brief">Read the policy brief</a>
+          </nav>
         </div>
       </div>
     </section>
 
     <div class="wrap body-content">
-      <section id="explore" class="section explorer" aria-labelledby="explore-heading">
+      <section id="explore" class="section explorer" tabindex="-1" aria-labelledby="explore-heading">
         <div class="section-heading explorer-heading">
           <div><h2 id="explore-heading" tabindex="-1">Community explorer</h2><p id="map-date">Water snapshot</p></div>
           <button class="advisory-filter" id="filter-active" type="button" aria-pressed="false" aria-controls="active-list map">
@@ -86,7 +91,7 @@
               <h3 id="active-list-heading" tabindex="-1">Active advisories</h3>
               <div id="active-results" class="active-results"></div>
             </section>
-            <section id="community-profile" class="profile panel" aria-label="First Nation profile">
+            <section id="community-profile" class="profile panel" tabindex="-1" aria-label="First Nation profile">
               <div id="profile" aria-live="polite"><p class="muted">Loading community records…</p></div>
               <div class="profile-tools" id="profile-tools">
                 <button class="button secondary" id="pin-nation" type="button" aria-pressed="false" hidden>Pin for comparison</button>
@@ -144,7 +149,7 @@
         </div>
       </section>
 
-      <section id="brief" class="section brief" aria-labelledby="brief-heading">
+      <section id="brief" class="section brief" tabindex="-1" aria-labelledby="brief-heading">
         <div class="brief-summary">
           <p class="eyebrow">Policy brief</p>
           <h2 id="brief-heading">Who gets to decide what counts as progress?</h2>
@@ -203,6 +208,10 @@
     <label id="share-fallback" for="share-url" hidden>Share link <input id="share-url" type="url" readonly></label>
     <button class="link-button" id="dismiss-share" type="button">Dismiss</button>
   </div>
-  <footer><div class="wrap"><span>SystemicNotes · Joshua Adesida</span><span>Independent public policy research</span></div></footer>
+  <footer class="site-footer"><div class="wrap">
+    <span>SystemicNotes · Joshua Adesida</span>
+    <span>Independent public policy research</span>
+    <a class="footer-back" href="https://joshuaadesida.github.io/systemicnotes/#projects"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7"/></svg>Back to all projects</a>
+  </div></footer>
 </body>
 </html>
