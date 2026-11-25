@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>First Nations Infrastructure, Water &amp; Capital Gap Tracker | SystemicNotes by Joshua Adesida</title>
+  <meta name="author" content="Joshua Adesida">
+  <meta property="og:site_name" content="SystemicNotes by Joshua Adesida">
+  <meta name="description" content="Explore Manitoba First Nations infrastructure through public records on drinking water, winter roads, housing and federal investment.">
+  <link rel="canonical" href="https://joshuaadesida.github.io/systemicnotes/">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="snapshot.js"></script>
+  <script defer src="tracker.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header class="masthead">
+    <div class="wrap masthead-content">
+      <a class="brand" href="#main"><span class="brand-icon" aria-hidden="true"><i></i><i></i><i></i></span> <span class="wordmark">SystemicNotes</span><span class="masthead-author">Joshua Adesida</span></a>
+      <nav aria-label="Main navigation">
+        <a href="#explore">Explore</a><a href="#evidence">Evidence</a><a href="#brief">Policy brief</a><a href="#methods">Sources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-content">
+        <div>
+          <p class="eyebrow">A SystemicNotes project by Joshua Adesida</p>
+          <h1>First Nations Infrastructure, Water &amp; Capital Gap Tracker</h1>
+          <p class="hero-copy">I wanted to see what public spending changes on the ground. This tracker brings together records on water, winter roads, housing and infrastructure investment across Manitoba First Nations.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap body-content">
+      <section id="explore" class="section explorer" aria-labelledby="explore-heading">
+        <div class="section-heading explorer-heading">
+          <div><h2 id="explore-heading" tabindex="-1">Community explorer</h2><p id="map-date">Water snapshot</p></div>
+          <button class="advisory-filter" id="filter-active" type="button" aria-pressed="false" aria-controls="active-list map">
+            <span class="advisory-diamond" aria-hidden="true"></span><strong id="metric-active">—</strong><span>active long-term advisories</span>
+          </button>
+        </div>
+        <div class="workspace">
+          <div class="map-panel panel">
+            <div class="map-controls">
+              <label for="query">Find a First Nation
+                <input id="query" type="search" placeholder="e.g. Shamattawa or 307" autocomplete="off">
+              </label>
+              <label for="layer">Map layer
+                <select id="layer"><option value="water">Water advisories</option><option value="roads">Winter routes</option><option value="funding">Project funding</option></select>
+              </label>
+              <label for="treaty">Treaty affiliation
+                <select id="treaty"><option value="">All affiliations</option></select>
+              </label>
+            </div>
+            <div class="map-toolbar">
+              <label class="filter" id="layer-filter" hidden><input id="matches-only" type="checkbox"> <span id="filter-label">Active advisory only</span></label>
+              <span id="result-count" role="status">Loading records</span>
+              <button class="link-button" id="clear-filters" type="button" hidden>Clear filters</button>
+              <div class="basemap-switch" role="group" aria-label="Basemap">
+                <button type="button" id="basemap-map" aria-pressed="false">Map</button>
+                <button type="button" id="basemap-satellite" aria-pressed="true">Satellite</button>
+              </div>
+            </div>
+            <div id="map-window" class="map-window">
+              <svg id="map" viewBox="0 0 760 560" aria-labelledby="map-title">
+                <title id="map-title">Selectable map of Manitoba First Nations</title>
+                <g id="map-viewport"><g id="map-base" aria-hidden="true"></g><g id="map-imagery" aria-hidden="true"></g><g id="map-context" aria-hidden="true"></g><g id="map-points"></g><g id="map-label" aria-hidden="true"></g></g>
+              </svg>
+              <div class="map-zoom" aria-label="Map controls">
+                <button id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in">+</button>
+                <button id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out">−</button>
+                <button id="zoom-reset" type="button" aria-label="Reset map view" title="Reset map view">⤢</button>
+              </div>
+              <div id="imagery-status" class="imagery-status" role="status" hidden></div>
+              <div class="map-legend" id="legend" aria-label="Map legend"></div>
+              <div class="map-tip" id="map-tip" hidden></div>
+              <p class="map-empty" id="map-empty" hidden>No First Nations match these filters.</p>
+            </div>
+            <div class="map-footer"><label for="nation">Jump to a profile
+              <select id="nation"><option value="">Select a First Nation</option></select>
+            </label><button type="button" class="button secondary" id="zoom-nation" disabled>Zoom to Nation</button></div>
+            <p class="map-credit"><span>Points show administrative locations.</span> <a id="vector-credit" data-source="basemap">Natural Earth</a><span id="satellite-credit" hidden><a href="https://cloudless.eox.at/">EOxCloudless</a> by EOX IT Services GmbH · Contains modified Copernicus Sentinel data 2025</span></p>
+          </div>
+
+          <aside class="explorer-side" aria-label="Community records">
+            <section class="panel active-list" id="active-list" aria-labelledby="active-list-heading" hidden>
+              <h3 id="active-list-heading" tabindex="-1">Active advisories</h3>
+              <div id="active-results" class="active-results"></div>
+            </section>
+            <section id="community-profile" class="profile panel" aria-label="First Nation profile">
+              <div id="profile" aria-live="polite"><p class="muted">Loading community records…</p></div>
+              <div class="profile-tools" id="profile-tools">
+                <button class="button secondary" id="pin-nation" type="button" aria-pressed="false" hidden>Pin for comparison</button>
+                <button class="link-button" id="share-profile" type="button" hidden>Copy profile link</button>
+                <button class="link-button" id="open-compare" type="button" aria-controls="compare">Compare Nations</button>
+              </div>
+              <noscript><p>Enable JavaScript to browse the map and community profiles.</p></noscript>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="compare" class="section" aria-labelledby="compare-heading" hidden>
+        <div class="section-heading comparison-heading">
+          <div><h2 id="compare-heading" tabindex="-1">Compare First Nations</h2><p>Compare records from the same snapshot side by side.</p></div>
+          <button class="button secondary" id="share-compare" type="button" disabled>Copy comparison link</button>
+        </div>
+        <div class="compare-grid">
+          <article class="panel compare-card">
+            <label for="compare-first">First Nation <select id="compare-first"></select></label>
+            <div id="compare-first-body"></div>
+          </article>
+          <article class="panel compare-card">
+            <label for="compare-second">Second Nation <select id="compare-second"></select></label>
+            <div id="compare-second-body"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Additional Manitoba indicators">
+        <article class="metric"><p>Without all-weather road access</p><strong id="metric-roads">—</strong><small>First Nations · ISC regional overview</small></article>
+        <article class="metric"><p>Major housing repair gap</p><strong id="metric-housing">—</strong><small>On vs. off reserve · 2021 Census</small></article>
+        <article class="metric"><p>Reported ISC funding</p><strong id="metric-funding">—</strong><small>Five water projects · June 2026</small></article>
+      </section>
+
+      <section id="evidence" class="section" aria-labelledby="evidence-heading">
+        <div class="section-heading"><div><h2 id="evidence-heading">What the records show</h2><p>Housing conditions and selected water investments at their published scale.</p></div></div>
+        <div class="analysis-grid">
+          <article class="panel analysis">
+            <p class="eyebrow">Statistics Canada · 2021 Census</p>
+            <h3>Living in housing that needs major repairs</h3>
+            <p>Share of First Nations people in private households in Manitoba, by residence.</p>
+            <div id="housing-chart" class="chart" aria-label="Housing repair needs by residence"></div>
+            <p class="footnote" id="housing-note">Counts come from the 2021 Census long-form sample.</p>
+            <a class="source-link" data-source="housing">Statistics Canada table 98-10-0286-01</a>
+          </article>
+          <article class="panel analysis">
+            <p class="eyebrow">Indigenous Services Canada · June 2026</p>
+            <h3>Funding for five water projects</h3>
+            <p>ISC-reported amounts in Canadian dollars. Select a project to see the Nation’s profile.</p>
+            <div id="funding-chart" class="chart" aria-label="Reported funding for five water projects"></div>
+            <p class="footnote">This release covers five projects. The full Manitoba capital gap would require comparable asset needs, funding and expenditures.</p>
+            <a class="source-link" data-source="funding">ISC funding and milestones backgrounder</a>
+          </article>
+        </div>
+      </section>
+
+      <section id="brief" class="section brief" aria-labelledby="brief-heading">
+        <div class="brief-summary">
+          <p class="eyebrow">Policy brief</p>
+          <h2 id="brief-heading">Who gets to decide what counts as progress?</h2>
+          <p>I start from the view that safe water, livable housing and dependable access to supplies are collective needs. I look at budgets and jurisdiction because they shape who gets the resources to meet those needs, who sets the terms, and who has to wait.</p>
+        </div>
+        <div class="brief-body">
+          <h3>What the Manitoba snapshot shows</h3>
+          <p id="brief-water">The federal water tracker records advisory and project milestones independently.</p>
+          <p id="brief-findings">Housing conditions and winter-road access add context for infrastructure planning.</p>
+          <button class="button case-link" id="show-case" type="button">View Tataskweyak case on map</button>
+          <h3>What I would change</h3>
+          <ol>
+            <li><strong>Follow the water after construction.</strong> Report when people can use the water again, what it takes to keep the system running, and whether the Nation has the resources to do that work. First Nations should direct what gets shared.</li>
+            <li><strong>Budget for the costs people already live with.</strong> Use routes, freight windows and costs confirmed by First Nations when planning construction and funding ongoing operations.</li>
+            <li><strong>Give First Nations control over how need is defined.</strong> Start with each Nation’s service priorities and rules for sharing its records. Track commitments, actual spending and remaining needs separately so the public can see where the money went.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="methods" class="section" aria-labelledby="methods-heading">
+        <div class="section-heading"><div><h2 id="methods-heading">Sources &amp; methodology</h2><p>See where the numbers come from and what they can tell us.</p></div><a class="button secondary" href="first-nations.geojson" download>Download GeoJSON</a></div>
+        <div class="panel method-list">
+          <details open><summary>How I approach the evidence</summary>
+            <p>I approach this project from an anti-colonial political economy perspective. First Nations should set their own infrastructure priorities, and governments should answer for the commitments they make. I use public records to ask what governments funded, what they counted as progress and what we can verify about the service people actually received.</p>
+            <p>That is why I track project status and water advisories separately. I use the Census for a provincial housing comparison and Manitoba’s reports for named winter routes. Each source answers a different question.</p>
+          </details>
+          <details><summary>Coverage and joins</summary>
+            <p>ISC band numbers link the Manitoba region records to the official First Nations Location points and the reviewed treaty and winter-road lookups. The points represent administrative locations and sometimes approximate locations. Treaty affiliations follow ISC’s text description of signatories, including Treaty 5 adhesions.</p>
+            <p><a data-source="locations">First Nations Location</a> · <a data-source="treaties">First Nations and Treaty Areas in Manitoba</a> · <a data-source="basemap">Natural Earth basemap</a> · <a href="https://cloudless.eox.at/products/viewing">2025 Sentinel-2 imagery</a></p>
+            <p>The satellite view uses a 2025 mosaic with a 10-metre source resolution. Imagery and administrative points provide geographic context. They do not establish boundaries or current on-the-ground conditions.</p>
+          </details>
+          <details><summary>Water advisories and infrastructure projects</summary>
+            <p>ISC’s map covers long-term advisories on federally supported public systems on reserve. Advisory counts refer to systems and episodes in the dated export. Other systems, private wells and short-term advisories fall outside that coverage. Current local notices govern water use.</p>
+            <p>Project stages come from the same ISC export. Published amounts in that export carry multi-community funding notes and cannot be allocated to individual Nations from those records. The funding chart uses a separate ISC release with five named project amounts. A capital gap estimate requires compatible asset-condition, replacement-cost and spending data.</p>
+            <p><a data-source="water">ISC water and project map</a> · <a data-source="active">ISC active advisory page</a> · <a data-source="funding">Five Manitoba water projects</a></p>
+          </details>
+          <details><summary>Winter roads and all-weather access</summary>
+            <p>The winter-road layer identifies 18 First Nations linked to place names in Manitoba’s published northern and southern road reports. A route listing describes a seasonal route or crossing. A route can appear alongside other road access. ISC reports 17 Manitoba First Nations without all-weather road access in its regional overview. That provincial figure uses ISC’s classification.</p>
+            <p><a data-source="roads">Manitoba winter-road reports</a> · <a data-source="regional">ISC Manitoba regional overview</a></p>
+          </details>
+          <details><summary>Census definition and coverage</summary>
+            <p>The housing measure uses the 2021 Census long-form table for people with a single First Nations identity in private households in Manitoba, across registration statuses and ages. The rate divides people in dwellings needing major repairs by people in the matching residence group. The gap is the difference in percentage points before rounding.</p>
+            <p>Estimates use rounded Census counts and omit incompletely enumerated reserves and settlements. A census subdivision and a Nation are different units. Community-level housing comparisons require a reviewed geographic crosswalk and compatible denominators.</p>
+            <p><a data-source="housing">Dwelling condition table</a> · <a data-source="censusCoverage">Census enumeration and coverage</a></p>
+          </details>
+          <details><summary>First Nations data governance</summary>
+            <p>For me, data governance starts with who has the power to decide how information is collected, used and shared. The First Nations principles of OCAP® describe ownership, control, access and possession. CARE emphasizes collective benefit, authority to control, responsibility and ethics. This project uses published government records. Nation approval and OCAP® adherence require their own process.</p>
+            <p>I would seek Nation-led terms for access, review, correction and stewardship before using community-held records or publishing more detailed assessments.</p>
+            <p><a data-source="ocap">First Nations Information Governance Centre</a> · <a data-source="care">Global Indigenous Data Alliance</a></p>
+          </details>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div class="share-message panel" id="share-message" hidden>
+    <p id="share-status" role="status"></p>
+    <label id="share-fallback" for="share-url" hidden>Share link <input id="share-url" type="url" readonly></label>
+    <button class="link-button" id="dismiss-share" type="button">Dismiss</button>
+  </div>
+  <footer><div class="wrap"><span>SystemicNotes · Joshua Adesida</span><span>Independent public policy research</span></div></footer>
+</body>
+</html>
