@@ -22,46 +22,137 @@
     }
   </script>
   <style>
-    :root { color-scheme: light; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #142b3d; background: #f3f7f6; }
+    :root {
+      color-scheme: light;
+      --ink: #17382e;
+      --muted: #3d5950;
+      --green: #145e47;
+      --dark: #12392f;
+      --line: #c9ddd3;
+      --paper: #f6f9f6;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
     * { box-sizing: border-box; }
     body { margin: 0; line-height: 1.55; }
-    .wrap { width: min(66rem, calc(100% - 2.75rem)); margin-inline: auto; }
-    .masthead { background: #0e2738; color: #d2e6e4; }
-    .masthead .wrap { min-height: 62px; display: flex; align-items: center; gap: .85rem; }
-    .brand { color: #fff; font-size: 1.08rem; font-weight: 770; }
-    .author { padding-left: .85rem; border-left: 1px solid #607e87; font-size: .88rem; }
-    .hero { padding-block: clamp(2.1rem, 6vw, 4rem); background: #e7f0ed; border-bottom: 1px solid #d1e1dc; }
     h1, h2, h3, p { margin: 0; }
-    h1, h2, h3 { line-height: 1.15; letter-spacing: -.04em; }
-    h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); }
-    p { color: #385565; }
-    .hero p { margin-top: .55rem; font-size: 1.09rem; }
-    .projects { padding-block: 2rem 3rem; }
-    h2 { font-size: 1.6rem; margin-bottom: .7rem; }
-    .project { display: block; padding: clamp(1rem, 3vw, 1.45rem); color: #142b3d; background: #fff; border: 1px solid #cbdad8; border-radius: 10px; text-decoration: none; max-width: 48rem; }
-    .project + .project { margin-top: 0.8rem; }
-    .project h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
-    .project p { margin-top: .5rem; }
-    .project:hover { border-color: #08685f; background: #f8fdfb; }
-    .project:hover h3 { text-decoration: underline; text-underline-offset: .2em; }
-    .project:focus-visible { outline: 3px solid #08685f; outline-offset: 4px; }
+    a { color: var(--green); text-underline-offset: .2em; }
+    a:focus-visible, [tabindex]:focus-visible { outline: 3px solid #12734f; outline-offset: 4px; }
+    .dark a:focus-visible { outline-color: #b3f4d5; }
+    [id] { scroll-margin-top: 1rem; }
+    .wrap { width: min(70rem, calc(100% - 3rem)); margin-inline: auto; }
+    .skip { position: fixed; z-index: 5; top: .65rem; left: .65rem; border-radius: .35rem; padding: .7rem 1rem; background: #fff; transform: translateY(-180%); }
+    .skip:focus { transform: none; }
+    .masthead, footer { background: var(--dark); color: #eef8f2; }
+    .masthead .wrap { display: flex; justify-content: space-between; align-items: center; gap: .5rem 1.35rem; min-height: 4.15rem; padding-block: .4rem; }
+    .brand { display: inline-flex; align-items: center; gap: .55rem; color: #f2fbf4; font-size: 1.12rem; font-weight: 760; letter-spacing: -.035em; text-decoration: none; min-height: 2.75rem; }
+    .mark, .tile-icon { width: 2rem; height: 2rem; padding: .31rem; flex: none; border: 1px solid #81ac98; border-radius: .37rem; color: #b5ebd0; }
+    .nav-list { list-style: none; display: flex; flex-wrap: wrap; gap: .25rem; padding: 0; margin: 0; }
+    .nav-list a, .top-link { color: #e3f1e9; display: inline-flex; align-items: center; min-height: 2.75rem; padding: .35rem .65rem; font-size: .925rem; font-weight: 650; border-radius: .35rem; text-decoration: none; }
+    .nav-list a:hover, .top-link:hover, .brand:hover { text-decoration: underline; }
+    .nav-list a:hover, .top-link:hover { background: #245244; }
+    .hero { background: #e0f0e6; border-bottom: 1px solid var(--line); }
+    .hero .wrap { display: grid; align-items: center; grid-template-columns: minmax(0,1fr) auto; gap: 1.3rem; padding-block: clamp(2.3rem, 6vw, 4.75rem); }
+    h1, h2 { font-family: Georgia, serif; font-weight: 500; line-height: 1.05; letter-spacing: -.045em; }
+    h1 { font-size: clamp(3.05rem, 8.25vw, 6.4rem); color: #13392c; }
+    .hero p { color: var(--muted); margin-top: .65rem; font-size: clamp(1.02rem, 2.1vw, 1.25rem); }
+    .hero-mark { width: clamp(7rem, 19vw, 14rem); height: auto; color: #437e66; margin-right: clamp(.5rem, 4vw, 3rem); }
+    .projects { padding-block: clamp(1.8rem, 4vw, 3.2rem); }
+    h2 { font-size: clamp(2rem, 4.8vw, 3rem); }
+    h3 { font-size: clamp(1.15rem, 2.3vw, 1.55rem); line-height: 1.25; letter-spacing: -.025em; }
+    .project-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .875rem; margin-top: 1rem; }
+    .project { display: flex; flex-direction: column; align-items: start; gap: .65rem; padding: clamp(1.05rem, 3vw, 1.6rem); border: 1px solid var(--line); border-top: 3px solid #3a8668; border-radius: .65rem; background: #fff; color: var(--ink); text-decoration: none; }
+    .project:nth-child(2) { border-top-color: #286c5d; }
+    .project:hover { border-color: #2b805e; background: #f0f8f3; }
+    .project:hover h3 { text-decoration-thickness: 2px; }
+    .project h3 { text-decoration: underline; text-underline-offset: .18em; text-decoration-color: #529477; text-decoration-thickness: 1px; }
+    .project p { color: var(--muted); font-size: 1rem; }
+    .tile-icon { width: 2.15rem; height: 2.15rem; padding: .37rem; background: #e3f1e8; border-color: #c6dccf; color: #195e47; }
+    .collections { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .875rem; padding-bottom: clamp(2rem, 5vw, 4rem); }
+    .collection { display: grid; grid-template-columns: auto 1fr; align-content: start; align-items: center; gap: .55rem .7rem; padding: 1.05rem; border: 1px solid var(--line); border-radius: .65rem; background: #edf5ef; }
+    .collection h2 { font: 720 clamp(1.03rem,1.85vw,1.25rem)/1.25 Inter,system-ui,sans-serif; letter-spacing: -.01em; }
+    .collection p { color: var(--muted); grid-column: 2; font-size: .925rem; }
+    .collection:target { border-color: #3a8668; outline: 2px solid #3a8668; outline-offset: 3px; }
+    footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; min-height: 4.3rem; gap: .1rem .75rem; padding-block: .55rem; }
+    footer p { color: #d6e9df; font-size: .925rem; }
+    @media (max-width: 720px) {
+      .wrap { width: calc(100% - 2rem); }
+      .masthead .wrap { align-items: start; flex-wrap: wrap; }
+      .masthead nav { width: 100%; }
+      .nav-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .3rem; }
+      .nav-list a { display: flex; border: 1px solid #507568; }
+      .collections { grid-template-columns: minmax(0,1fr); }
+    }
+    @media (max-width: 545px) {
+      .hero .wrap, .project-grid { grid-template-columns: minmax(0,1fr); }
+      .hero-mark { display: none; }
+    }
   </style>
 </head>
 <body>
-  <header class="masthead"><div class="wrap"><span class="brand">SystemicNotes</span><span class="author">Joshua Adesida</span></div></header>
-  <main>
-    <div class="hero"><div class="wrap"><h1>SystemicNotes</h1><p>Writing and research by Joshua Adesida.</p></div></div>
-    <section class="wrap projects" aria-labelledby="projects">
-      <h2 id="projects">Projects</h2>
-      <a href="./first-nations-infrastructure-tracker/" class="project">
-        <h3>First Nations Infrastructure, Water &amp; Capital Gap Tracker</h3>
-        <p>Explore public records on drinking water, winter roads, housing and infrastructure investment across Manitoba First Nations.</p>
-      </a>
-      <a href="./winnipeg-housing-zoning-simulator/" class="project">
-        <h3>Winnipeg Housing &amp; Zoning Reform Simulator</h3>
-        <p>Test what different lot rules could mean for housing supply, and explore where public and non-market homes could fit.</p>
-      </a>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="icon-path" viewBox="0 0 24 24"><path d="m6 18 6-10 6 5M12 8l-5-4"/><circle cx="6" cy="18" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="18" cy="13" r="2"/><circle cx="7" cy="4" r="2"/></symbol>
+    <symbol id="icon-water" viewBox="0 0 24 24"><path d="M12 3c-2 3-6 7.2-6 11a6 6 0 0 0 12 0c0-3.8-4-8-6-11Z"/><path d="M9 15a3 3 0 0 0 3 3"/></symbol>
+    <symbol id="icon-city" viewBox="0 0 24 24"><path d="M3 21V11l5-4 5 4v10M13 21V5h8v16M1 21h22M7 15h2m7-6h2m-2 4h2m-2 4h2"/></symbol>
+    <symbol id="icon-essay" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8m-8 4h8"/></symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 6c-3-2-6-3-10-2v15c4-1 7 0 10 2 3-2 6-3 10-2V4c-4-1-7 0-10 2Zm0 0v15"/></symbol>
+    <symbol id="icon-video" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m10 8 6 4-6 4Z"/></symbol>
+  </svg>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header id="top" class="masthead dark">
+    <div class="wrap">
+      <a class="brand" href="./" aria-label="SystemicNotes home"><svg class="mark" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><use href="#icon-path"/></svg>SystemicNotes</a>
+      <nav aria-label="Publication"><ul class="nav-list">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#essays">Essays</a></li>
+        <li><a href="#readings">Recommended readings</a></li>
+        <li><a href="#videos">Videos</a></li>
+      </ul></nav>
+    </div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="hero"><div class="wrap">
+      <div><h1>SystemicNotes</h1><p>Writing and research by Joshua Adesida.</p></div>
+      <svg class="hero-mark" viewBox="0 0 200 134" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round">
+        <path d="M18 117H182M18 88H182M18 59H182M18 30H182M34 14v106m35-106v106m35-106v106m35-106v106m35-106v106" opacity=".22"/>
+        <path d="m34 98 35-39 35 16 35-45 35 18M69 59l-3-32m38 48 35 31" stroke-width="2.5"/>
+        <g fill="#e0f0e6" stroke-width="2.5"><circle cx="34" cy="98" r="5"/><circle cx="69" cy="59" r="5"/><circle cx="66" cy="27" r="4"/><circle cx="104" cy="75" r="6"/><circle cx="139" cy="30" r="5"/><circle cx="139" cy="106" r="4"/><circle cx="174" cy="48" r="5"/></g>
+      </svg>
+    </div></div>
+    <section id="projects" class="wrap projects" aria-labelledby="projects-title" tabindex="-1">
+      <h2 id="projects-title">Projects</h2>
+      <div class="project-grid">
+        <a href="./first-nations-infrastructure-tracker/" class="project" aria-labelledby="tracker-title" aria-describedby="tracker-description">
+          <svg class="tile-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><use href="#icon-water"/></svg>
+          <h3 id="tracker-title">First Nations Infrastructure, Water &amp; Capital Gap Tracker</h3>
+          <p id="tracker-description">Explore public records on drinking water, winter roads, housing and infrastructure investment across Manitoba First Nations.</p>
+        </a>
+        <a href="./winnipeg-housing-zoning-simulator/" class="project" aria-labelledby="zoning-title" aria-describedby="zoning-description">
+          <svg class="tile-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><use href="#icon-city"/></svg>
+          <h3 id="zoning-title">Winnipeg Housing &amp; Zoning Reform Simulator</h3>
+          <p id="zoning-description">Test what different lot rules could mean for housing supply, and explore where public and non-market homes could fit.</p>
+        </a>
+      </div>
     </section>
+    <div class="wrap collections">
+      <section id="essays" class="collection" aria-labelledby="essays-title" tabindex="-1">
+        <svg class="tile-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><use href="#icon-essay"/></svg>
+        <h2 id="essays-title">Essays</h2><p>Coming soon</p>
+      </section>
+      <section id="readings" class="collection" aria-labelledby="readings-title" tabindex="-1">
+        <svg class="tile-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><use href="#icon-book"/></svg>
+        <h2 id="readings-title">Recommended readings</h2><p>Coming soon</p>
+      </section>
+      <section id="videos" class="collection" aria-labelledby="videos-title" tabindex="-1">
+        <svg class="tile-icon" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><use href="#icon-video"/></svg>
+        <h2 id="videos-title">Videos</h2><p>Coming soon</p>
+      </section>
+    </div>
   </main>
+  <footer class="dark"><div class="wrap">
+    <p>SystemicNotes · Joshua Adesida</p>
+    <a class="top-link" href="#top">Back to top</a>
+  </div></footer>
 </body>
 </html>
