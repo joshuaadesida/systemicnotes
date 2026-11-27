@@ -37,7 +37,7 @@ button, select { cursor: pointer; }
 .brand { display: flex; align-items: center; gap: .8rem; color: #fff; white-space: nowrap; text-decoration: none; font-weight: 675; }
 .wordmark { font-size: 1.08rem; font-weight: 770; letter-spacing: -.02em; }
 .masthead-author { border-left: 1px solid #607e87; padding-left: .8rem; color: #d2e6e4; font-size: .875rem; font-weight: 530; }
-.brand-icon { flex: none; width: 31px; height: 30px; border: 1px solid #76978d; border-radius: 5px; padding: 4px; color: #a9e4c9; }
+.brand-icon { flex: none; width: 36px; height: 36px; border: 1px solid #76978d; border-radius: 5px; object-fit: contain; }
 nav { display: flex; align-items: center; gap: clamp(.8rem, 2.4vw, 2.4rem); }
 nav a { color: #d1e1e5; font-size: .875rem; text-decoration: none; white-space: nowrap; }
 nav a:hover { color: white; text-decoration: underline; }
