@@ -42,7 +42,15 @@
   if (!words.length) return;
 
   const last = words.length - 1;
+  const essayUrl = document.querySelector('link[rel="canonical"]')?.href || location.pathname;
+  const bookmarkKey = "systemicnotes:reader:" + essayUrl;
   let position = 0;
+  try {
+    const saved = Number(sessionStorage.getItem(bookmarkKey));
+    if (Number.isInteger(saved) && saved >= 0 && saved <= last) position = saved;
+  } catch {
+    // Reading still works when browser storage is unavailable.
+  }
   let timer = null;
   let playing = false;
   let finished = false;
@@ -50,6 +58,15 @@
   let wpm = Number(speed.value);
   timeline.max = String(last);
   open.hidden = false;
+
+  function savePosition() {
+    try {
+      if (position === 0 || finished) sessionStorage.removeItem(bookmarkKey);
+      else sessionStorage.setItem(bookmarkKey, String(position));
+    } catch {
+      // The page keeps its current position in memory.
+    }
+  }
 
   function setAnnouncement(label) {
     status.textContent = label + " " + (position + 1) + " of " + words.length + " words.";
@@ -104,7 +121,10 @@
     window.clearTimeout(timer);
     timer = null;
     playing = false;
-    if (refresh && dialog.open) draw();
+    if (refresh) {
+      savePosition();
+      if (dialog.open) draw();
+    }
   }
 
   function schedule() {
@@ -153,6 +173,7 @@
     pause({ refresh: false });
     position = Math.min(last, Math.max(0, index));
     finished = false;
+    savePosition();
     draw();
     setAnnouncement("Paused.");
   }
@@ -188,6 +209,7 @@
     if (document.hidden) pause();
   });
   window.addEventListener("blur", () => pause());
+  window.addEventListener("pagehide", () => pause());
   window.addEventListener("resize", fitWord);
 
   dialog.addEventListener("keydown", (event) => {
